@@ -32,6 +32,7 @@ export function HigherLowerGame() {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(
                     (n) => (
                         <button
+                            className="guessButton"
                             disabled={guesses.includes(n)}
                             key={n}
                             onClick={() => handleGuessClicked(n)}
@@ -44,7 +45,9 @@ export function HigherLowerGame() {
             <Hint lastGuess={lastGuess} hint={hint} />
 
             <Guesses guesses={guesses} numberToGuess={numberToGuess} />
-            <button onClick={startNewGame}>Start New Game</button>
+            <button className="startNewGameButton" onClick={startNewGame}>
+                Start New Game
+            </button>
         </div>
     );
 }

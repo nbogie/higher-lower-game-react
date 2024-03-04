@@ -106,16 +106,21 @@ body {
     flex-wrap: wrap;
     gap: 0.2rem;
 }
-.buttons button {
+.guessButton,
+.startNewGameButton {
     background: var(--palette2);
     color: white;
     border: none;
     font-size: 2rem;
     border-radius: 0.3rem;
 }
+.startNewGameButton {
+    padding: 0.3rem 0.7rem;
+}
 .buttons button[disabled] {
     opacity: 0.5;
 }
+
 .guesses {
     display: flex;
     flex-direction: row;
@@ -124,6 +129,7 @@ body {
     font-size: 3rem;
     justify-content: flex-start;
 }
+
 .guess {
     background: white;
     width: 5rem;
