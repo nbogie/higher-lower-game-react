@@ -1,57 +1,65 @@
+import { shuffle } from "lodash";
+
+export type Direction = "higher" | "lower";
+export type WinState = "won" | "lost" | "in-play";
 export interface GameState {
-    numberToGuess: number;
-    guesses: number[];
+    drawDeck: number[];
+    history: [number, Direction | null][];
+    gameLen: number;
 }
 
-export type Hint = "correct" | "higher" | "lower";
-export type GuessAndHint = [number, Hint];
+export function createInitialState(gameLen: number = 3): GameState {
+    const deck = Array.from({ length: 52 }, (_, i) => (i % 15) + 1);
+    const drawDeck = shuffle(deck);
+    const first = drawDeck.pop()!;
 
-export function createInitialState(): GameState {
-    return { numberToGuess: randomNumber(), guesses: [] };
+    return { drawDeck, history: [[first, null]], gameLen };
 }
 
-export function selectGuesses(state: GameState): number[] {
-    return state.guesses;
+export function selectHistory(state: GameState) {
+    return state.history;
 }
 
-export function selectNumberToGuess(state: GameState): number {
-    return state.numberToGuess;
-}
-export function selectLastGuessWasCorrect(state: GameState): boolean {
-    return state.guesses.at(-1) === state.numberToGuess;
-}
-
-export function selectLastGuess(state: GameState): number | null {
-    return state.guesses.at(-1) ?? null;
-}
-
-export function selectCurrentHint(state: GameState): Hint | null {
-    const lastGuess = selectLastGuess(state);
-    const numberToGuess = selectNumberToGuess(state);
-    if (lastGuess === null || numberToGuess === null) {
-        return null;
-    }
-
-    return calculateHint(lastGuess, numberToGuess);
-}
-export function calculateHint(guess: number, numberToGuess: number): Hint {
-    if (guess === numberToGuess) {
-        return "correct";
-    }
-    return guess > numberToGuess ? "lower" : "higher";
+export function selectLastGuess(state: GameState): Direction | null {
+    return state.history.at(-1)?.[1] ?? null;
 }
 
 export function selectIsGameOver(state: GameState) {
-    return selectLastGuessWasCorrect(state);
+    return state.history.length >= state.gameLen || !selectNoScrewUps(state);
+}
+export function selectWinState(state: GameState): WinState {
+    if (!selectNoScrewUps(state)) {
+        return "lost";
+    }
+    if (state.history.length >= state.gameLen) {
+        return "won";
+    }
+    return "in-play";
 }
 
-export function selectGuessesWithHints(state: GameState): GuessAndHint[] {
-    return state.guesses.map((guess) => [
-        guess,
-        calculateHint(guess, state.numberToGuess),
-    ]);
+export function selectNoScrewUps(state: GameState) {
+    for (let i = 1; i < state.history.length; i++) {
+        const lastCard = state.history[i - 1][0];
+        const guess = state.history[i - 1][1];
+        const newCard = state.history[i][0];
+
+        if (guess === null) {
+            continue;
+        }
+        if (!isGuessCorrect(lastCard, newCard, guess)) {
+            return false;
+        }
+    }
+    return true;
 }
 
-function randomNumber() {
-    return Math.floor(Math.random() * 15) + 1;
+function isGuessCorrect(
+    lastCard: number,
+    newCard: number,
+    guess: Direction
+): boolean {
+    return (
+        (guess === "higher" && newCard > lastCard) ||
+        (guess === "lower" && newCard < lastCard)
+    );
 }

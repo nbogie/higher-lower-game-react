@@ -8,13 +8,24 @@ export function StartNewGameButton({
     state: GameState;
     dispatch: Dispatch<GameAction>;
 }) {
-    function startNewGame() {
-        dispatch({ type: "startNewGame" });
+    function startNewGame(gameLen: number) {
+        dispatch({ type: "startNewGame", gameLen });
     }
 
     return (
-        <button className="startNewGameButton" onClick={startNewGame}>
-            Start New Game
-        </button>
+        <div className={"startNewGameButtons"}>
+            <button
+                className="startNewGameButton"
+                onClick={() => startNewGame(3)}
+            >
+                New Game: Easy
+            </button>
+            <button
+                className="startNewGameButton"
+                onClick={() => startNewGame(5)}
+            >
+                New Game: Hard
+            </button>
+        </div>
     );
 }

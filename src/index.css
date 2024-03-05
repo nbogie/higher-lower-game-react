@@ -100,13 +100,6 @@ body {
     gap: 2rem;
 }
 
-.guessButtons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.2rem;
-}
-.guessButton,
 .startNewGameButton {
     background: var(--palette2);
     color: white;
@@ -116,9 +109,6 @@ body {
 }
 .startNewGameButton {
     padding: 0.3rem 0.7rem;
-}
-.guessButtons button[disabled] {
-    opacity: 0.5;
 }
 
 .guesses {
@@ -136,11 +126,35 @@ body {
     user-select: none;
     box-shadow: 0.2rem 0.2rem 0.2rem 0.1rem var(--palette1);
 }
-
+.startNewGameButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
 .higherLowerIndicator {
     font-size: 3rem;
     background: var(--palette4);
     padding: 2rem;
     border-radius: 2rem;
     color: white;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.gameOverAnnouncement {
+    font-size: 3rem;
+    background: var(--palette4);
+    padding: 2rem;
+    border-radius: 2rem;
+    color: white;
+}
+.win {
+    background: var(--palette4);
+}
+.loss {
+    background: var(--palette1);
 }

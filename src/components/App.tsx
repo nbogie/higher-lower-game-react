@@ -1,7 +1,7 @@
-import { HigherLowerGameView } from "./HigherLowerGameView";
+import { PlayYourCardsRightGameView } from "./PlayYourCardsRightGameView";
 
 function App() {
-    return <HigherLowerGameView />;
+    return <PlayYourCardsRightGameView />;
 }
 
 export default App;

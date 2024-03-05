@@ -1,12 +1,14 @@
 import {
+    Direction,
     GameState,
-    selectLastGuessWasCorrect,
     createInitialState,
+    selectIsGameOver,
 } from "../gameCore/gameState";
 
 export type GameAction =
-    | { type: "guess"; guess: number }
-    | { type: "startNewGame" };
+    | { type: "guess"; direction: Direction }
+    | { type: "turnNextCard" }
+    | { type: "startNewGame"; gameLen: number };
 
 export function reducerFunction(
     state: GameState,
@@ -14,16 +16,36 @@ export function reducerFunction(
 ): GameState {
     switch (action.type) {
         case "guess": {
-            if (selectLastGuessWasCorrect(state)) {
+            if (selectIsGameOver(state)) {
                 return state;
             }
-            return { ...state, guesses: [...state.guesses, action.guess] };
+            const newHistory = [...state.history];
+            const [lastNum, lastGuess] = newHistory.pop()!;
+            if (lastGuess !== null) {
+                return state; //already made a guess for this!
+            }
+            newHistory.push([lastNum, action.direction]);
+            return { ...state, history: newHistory };
+        }
+        case "turnNextCard": {
+            const last = state.history.at(-1);
+            console.log("was asked to turn next card");
+            if (last === undefined || last[1] === null) {
+                return state;
+            }
+            const newDeck = [...state.drawDeck];
+            const newCard = newDeck.pop()!;
+            return {
+                ...state,
+                drawDeck: newDeck,
+                history: [...state.history, [newCard, null]],
+            };
         }
         case "startNewGame": {
-            if (!selectLastGuessWasCorrect(state)) {
+            if (!selectIsGameOver(state)) {
                 return state;
             }
-            return createInitialState();
+            return createInitialState(action.gameLen);
         }
         default:
             throw new UnreachableCaseError(action);
