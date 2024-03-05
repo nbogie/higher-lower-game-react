@@ -40,6 +40,10 @@ export function calculateHint(guess: number, numberToGuess: number): Hint {
     return guess > numberToGuess ? "lower" : "higher";
 }
 
+export function selectIsGameOver(state: GameState) {
+    return selectLastGuessWasCorrect(state);
+}
+
 function randomNumber() {
     return Math.floor(Math.random() * 15) + 1;
 }

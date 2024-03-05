@@ -3,13 +3,14 @@ import {
     createInitialState,
     selectCurrentHint,
     selectGuesses,
+    selectIsGameOver,
     selectLastGuess,
     selectNumberToGuess,
 } from "../gameCore/gameState";
 import { reducerFunction } from "../reducer/reducerFunction";
-import { HintView } from "./HintView";
-import { GuessesView } from "./GuessesView";
 import { GuessButtonsView } from "./GuessButtonsView";
+import { GuessesView } from "./GuessesView";
+import { HintView } from "./HintView";
 import { StartNewGameButton } from "./StartNewGameButton";
 
 export function HigherLowerGameView() {
@@ -28,7 +29,9 @@ export function HigherLowerGameView() {
                 guesses={selectGuesses(state)}
                 numberToGuess={selectNumberToGuess(state)}
             />
-            <StartNewGameButton state={state} dispatch={dispatch} />
+            {selectIsGameOver(state) && (
+                <StartNewGameButton state={state} dispatch={dispatch} />
+            )}
         </div>
     );
 }
