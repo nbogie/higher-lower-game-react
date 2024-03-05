@@ -2,10 +2,9 @@ import { useReducer } from "react";
 import {
     createInitialState,
     selectCurrentHint,
-    selectGuesses,
+    selectGuessesWithHints,
     selectIsGameOver,
     selectLastGuess,
-    selectNumberToGuess,
 } from "../gameCore/gameState";
 import { reducerFunction } from "../reducer/reducerFunction";
 import { GuessButtonsView } from "./GuessButtonsView";
@@ -25,10 +24,8 @@ export function HigherLowerGameView() {
                 hint={selectCurrentHint(state)}
             />
 
-            <GuessesView
-                guesses={selectGuesses(state)}
-                numberToGuess={selectNumberToGuess(state)}
-            />
+            <GuessesView guessesWithHints={selectGuessesWithHints(state)} />
+
             {selectIsGameOver(state) && (
                 <StartNewGameButton state={state} dispatch={dispatch} />
             )}

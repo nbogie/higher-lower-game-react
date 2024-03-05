@@ -4,6 +4,7 @@ export interface GameState {
 }
 
 export type Hint = "correct" | "higher" | "lower";
+export type GuessAndHint = [number, Hint];
 
 export function createInitialState(): GameState {
     return { numberToGuess: randomNumber(), guesses: [] };
@@ -42,6 +43,13 @@ export function calculateHint(guess: number, numberToGuess: number): Hint {
 
 export function selectIsGameOver(state: GameState) {
     return selectLastGuessWasCorrect(state);
+}
+
+export function selectGuessesWithHints(state: GameState): GuessAndHint[] {
+    return state.guesses.map((guess) => [
+        guess,
+        calculateHint(guess, state.numberToGuess),
+    ]);
 }
 
 function randomNumber() {

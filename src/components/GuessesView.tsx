@@ -1,19 +1,15 @@
 import { Fragment } from "react";
-import { calculateHint } from "../gameCore/gameState";
+import { GuessAndHint } from "../gameCore/gameState";
 import { SymbolForHint } from "./SymbolForHint";
 
 export function GuessesView({
-    guesses,
-    numberToGuess,
+    guessesWithHints,
 }: {
-    guesses: number[];
-    numberToGuess: number;
+    guessesWithHints: GuessAndHint[];
 }) {
     return (
         <div className="guesses">
-            {guesses.map((guess) => {
-                const hint = calculateHint(guess, numberToGuess);
-
+            {guessesWithHints.map(([guess, hint]) => {
                 return (
                     <Fragment key={guess}>
                         <div className="guess">{guess}</div>
