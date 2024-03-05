@@ -5,7 +5,7 @@ export function WinLoseView({ winState }: { winState: WinState }) {
         return <div className="win gameOverAnnouncement">You Won!</div>;
     }
     if (winState === "lost") {
-        <div className="loss gameOverAnnouncement">You Lost!</div>;
+        return <div className="loss gameOverAnnouncement">You Lost!</div>;
     }
     return null;
 }

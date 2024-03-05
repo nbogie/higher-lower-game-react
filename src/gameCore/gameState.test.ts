@@ -1,20 +1,29 @@
 import { GameAction, reducerFunction } from "../reducer/reducerFunction";
-import { GameState, createInitialState, selectNoScrewUps } from "./gameState";
+import {
+    GameState,
+    createInitialState,
+    selectHistory,
+    selectNoScrewUps,
+} from "./gameState";
 import { it, expect } from "vitest";
 
 it("should detect game loss", () => {
-    const gs1 = createInitialState(4);
-
-    gs1.drawDeck = [10, 2, 1];
-    expect(gs1.drawDeck).toEqual([10, 2, 1]); //check it was mutated
+    const gs1 = createInitialState(4, [1, 2, 10]);
 
     const actions: GameAction[] = [
         { type: "guess", direction: "lower" },
+        { type: "turnNextCard" },
         { type: "guess", direction: "higher" },
+        { type: "turnNextCard" },
     ];
 
     const finalState = applyActions(actions, gs1);
-    expect(selectNoScrewUps(finalState)).toBe(false);
+    expect(selectHistory(finalState)).toEqual([
+        [10, "lower"],
+        [2, "higher"],
+        [1, null],
+    ]);
+    expect(selectNoScrewUps(finalState)).toEqual(false);
 });
 
 function applyActions(

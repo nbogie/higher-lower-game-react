@@ -29,7 +29,6 @@ export function reducerFunction(
         }
         case "turnNextCard": {
             const last = state.history.at(-1);
-            console.log("was asked to turn next card");
             if (last === undefined || last[1] === null) {
                 return state;
             }

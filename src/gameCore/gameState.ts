@@ -8,9 +8,14 @@ export interface GameState {
     gameLen: number;
 }
 
-export function createInitialState(gameLen: number = 3): GameState {
-    const deck = Array.from({ length: 52 }, (_, i) => (i % 15) + 1);
-    const drawDeck = shuffle(deck);
+export function createInitialState(
+    gameLen: number = 3,
+    initialDrawDeck?: number[]
+): GameState {
+    const drawDeck =
+        initialDrawDeck ??
+        shuffle(Array.from({ length: 52 }, (_, i) => (i % 15) + 1));
+
     const first = drawDeck.pop()!;
 
     return { drawDeck, history: [[first, null]], gameLen };
@@ -42,7 +47,6 @@ export function selectNoScrewUps(state: GameState) {
         const lastCard = state.history[i - 1][0];
         const guess = state.history[i - 1][1];
         const newCard = state.history[i][0];
-
         if (guess === null) {
             continue;
         }
