@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { SymbolForHint } from "./SymbolForHint";
+import { SymbolForDirection } from "./SymbolForDirection";
 import { Direction } from "../gameCore/gameState";
 
 export function HistoryView({
@@ -9,11 +9,11 @@ export function HistoryView({
 }) {
     return (
         <div className="guesses">
-            {history.map(([guess, hint], ix) => {
+            {history.map(([guess, direction], ix) => {
                 return (
                     <Fragment key={ix}>
                         <div className="guess">{guess}</div>
-                        <SymbolForHint hint={hint} />
+                        <SymbolForDirection direction={direction} />
                     </Fragment>
                 );
             })}
