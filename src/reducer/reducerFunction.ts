@@ -14,7 +14,9 @@ export function reducerFunction(
 ): GameState {
     switch (action.type) {
         case "guess": {
-            if (selectLastGuessWasCorrect(state)) state;
+            if (selectLastGuessWasCorrect(state)) {
+                return state;
+            }
             return { ...state, guesses: [...state.guesses, action.guess] };
         }
         case "startNewGame": {
@@ -23,6 +25,13 @@ export function reducerFunction(
             }
             return createInitialState();
         }
+        default:
+            throw new UnreachableCaseError(action);
     }
-    return state;
+}
+
+class UnreachableCaseError extends Error {
+    constructor(val: never) {
+        super(`Unreachable case: ${val}`);
+    }
 }
