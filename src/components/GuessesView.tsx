@@ -1,6 +1,7 @@
-import { calculateHint, symbolForHint } from "./HigherLowerGame";
+import { calculateHint } from "../gameCore/gameState";
+import { SymbolForHint } from "./SymbolForHint";
 
-export function Guesses({
+export function GuessesView({
     guesses,
     numberToGuess,
 }: {
@@ -15,7 +16,7 @@ export function Guesses({
                 return (
                     <>
                         <div className="guess">{guess}</div>
-                        <div className="hintSymbol">{symbolForHint(hint)}</div>
+                        <SymbolForHint hint={hint} />
                     </>
                 );
             })}

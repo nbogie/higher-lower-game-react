@@ -1,8 +1,9 @@
-export function Hint({
+import { Hint } from "../gameCore/gameState";
+export function HintView({
     hint,
     lastGuess,
 }: {
-    hint: "correct" | "higher" | "lower" | null;
+    hint: Hint | null;
     lastGuess: number | null;
 }) {
     if (hint === null || lastGuess === null) {

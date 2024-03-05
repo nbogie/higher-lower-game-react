@@ -100,7 +100,7 @@ body {
     gap: 2rem;
 }
 
-.buttons {
+.guessButtons {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -117,7 +117,7 @@ body {
 .startNewGameButton {
     padding: 0.3rem 0.7rem;
 }
-.buttons button[disabled] {
+.guessButtons button[disabled] {
     opacity: 0.5;
 }
 

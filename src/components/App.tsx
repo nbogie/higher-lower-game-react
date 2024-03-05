@@ -1,11 +1,7 @@
-import { HigherLowerGame } from "./HigherLowerGame";
+import { HigherLowerGameView } from "./HigherLowerGameView";
 
 function App() {
-    return (
-        <>
-            <HigherLowerGame />
-        </>
-    );
+    return <HigherLowerGameView />;
 }
 
 export default App;
